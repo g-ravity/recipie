@@ -1,0 +1,29 @@
+#chip {
+  background: #b5b5b5;
+  padding: 10px 5px 10px 10px;
+  border-radius: 20px;
+  cursor: default;
+  display: inline-flex;
+}
+
+#chip p,
+#chip img {
+  display: flex;
+  align-items: center;
+}
+
+#chip p {
+  margin-right: 10px;
+}
+
+#chip img {
+  cursor: pointer;
+}
+
+.not-selected {
+  opacity: 0.7;
+}
+
+.selected {
+  opacity: 1;
+}

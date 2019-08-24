@@ -1,0 +1,36 @@
+#search-bar {
+  width: 600px;
+  height: 70px;
+  background: #fff;
+  border-radius: 30px;
+  padding: 10px;
+  position: absolute;
+  bottom: 0;
+  box-sizing: border-box;
+  margin-bottom: -35px;
+}
+
+#search-bar input {
+  font-size: 1.2rem;
+  padding: 5px;
+  font-weight: bold;
+  height: 30px;
+  display: inline-flex;
+  border: 1px solid red;
+}
+
+#chip-terms #chip {
+  margin: 0px 5px 5px 0px;
+}
+
+#chip-terms {
+  justify-content: flex-start;
+}
+
+#search-bar button {
+  background: #2e2e2e;
+  color: #e6e6e6;
+  padding: 15px;
+  border-radius: 30px;
+  font-weight: bold;
+}
