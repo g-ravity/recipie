@@ -1,5 +1,5 @@
 #search-bar {
-  width: 600px;
+  min-width: 600px;
   height: 70px;
   background: #fff;
   border-radius: 30px;
@@ -15,12 +15,10 @@
   padding: 5px;
   font-weight: bold;
   height: 30px;
-  display: inline-flex;
-  border: 1px solid red;
 }
 
 #chip-terms #chip {
-  margin: 0px 5px 5px 0px;
+  margin-right: 5px;
 }
 
 #chip-terms {
@@ -33,4 +31,12 @@
   padding: 15px;
   border-radius: 30px;
   font-weight: bold;
+}
+
+#terms-warning {
+  color: #2e2e2e;
+  position: absolute;
+  bottom: 0;
+  right: 30px;
+  margin-bottom: -20px;
 }

@@ -8,13 +8,9 @@ class Chip extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isSelected: false
+      isSelected: true
     };
   }
-
-  onChipClick = () => {
-    this.setState({ isSelected: this.state.isSelected ? false : true });
-  };
 
   render() {
     return (
@@ -29,7 +25,9 @@ class Chip extends Component {
           src={this.state.isSelected ? cross : add}
           alt="icon"
           width="20"
-          onClick={this.onChipClick}
+          onClick={() => {
+            this.props.onClick(this.props.keyid);
+          }}
           className={this.state.isSelected ? "selected" : "not-selected"}
         />
       </div>

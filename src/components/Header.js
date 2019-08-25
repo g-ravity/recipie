@@ -6,7 +6,7 @@ import image1 from "../assets/img/img-1.png";
 import image2 from "../assets/img/img-2.png";
 import image3 from "../assets/img/img-3.png";
 
-const Header = () => {
+const Header = props => {
   return (
     <div className="flex-parent" id="header-container">
       <div id="brand-name">
@@ -18,7 +18,12 @@ const Header = () => {
         <img src={image2} alt="Scrambled Eggs" width="200" />
         <img src={image3} alt="Biriyani" width="200" />
       </div>
-      <SearchBar />
+      <SearchBar
+        onSearchAdd={props.onSearchAdd}
+        onSearchDelete={props.onSearchDelete}
+        searchTerms={props.searchTerms}
+        onSearchSubmit={props.onSearchSubmit}
+      />
     </div>
   );
 };

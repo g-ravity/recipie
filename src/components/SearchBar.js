@@ -7,25 +7,13 @@ class SearchBar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      searchTerms: [
-        "Bacon",
-        "Ham",
-        "Bacon",
-        "Ham",
-        "Bacon",
-        "Ham",
-        "Bacon",
-        "Ham",
-        "Bacon",
-        "Ham"
-      ],
       inputTerm: ""
     };
   }
 
   renderChips = () => {
-    return this.state.searchTerms.map((cur, index) => (
-      <Chip text={cur} key={cur + index} />
+    return this.props.searchTerms.map((cur, index) => (
+      <Chip text={cur} key={index} keyid={index} onClick={this.onChipDelete} />
     ));
   };
 
@@ -33,10 +21,14 @@ class SearchBar extends Component {
     this.setState({ inputTerm: event.target.value });
   };
 
+  onChipDelete = key => {
+    this.props.onSearchDelete(key);
+  };
+
   onInputSubmit = event => {
     event.preventDefault();
-    const searchTerms = [...this.state.searchTerms, this.state.inputTerm];
-    this.setState({ inputTerm: "", searchTerms });
+    this.props.onSearchAdd(this.state.inputTerm);
+    this.setState({ inputTerm: "" });
   };
 
   render() {
@@ -44,15 +36,19 @@ class SearchBar extends Component {
       <div id="search-bar" className="flex-parent">
         <div id="chip-terms" className="flex-parent">
           {this.renderChips()}
+          {this.props.searchTerms.length < 5 && (
+            <form onSubmit={this.onInputSubmit}>
+              <input
+                type="text"
+                onChange={this.onInputChange}
+                value={this.state.inputTerm}
+              />
+            </form>
+          )}
         </div>
-        {/* <form onSubmit={this.onInputSubmit}>
-          <input
-            type="text"
-            onChange={this.onInputChange}
-            value={this.state.inputTerm}
-          />
-        </form> */}
-        <button>SEARCH</button>
+        <button onClick={this.props.onSearchSubmit}>SEARCH</button>
+        <p id="terms-warning">{`${5 -
+          this.props.searchTerms.length} terms remaining`}</p>
       </div>
     );
   }
