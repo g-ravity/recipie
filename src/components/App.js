@@ -3,7 +3,6 @@ import React, { Component } from "react";
 import { BASE_URL, CORS_PROXY } from "../config";
 import Header from "./Header";
 import RecipeCard from "./RecipeCard";
-import Chip from "./Chip";
 import "../assets/css/App.css";
 
 class App extends Component {
@@ -35,12 +34,14 @@ class App extends Component {
   };
 
   renderRecipes = () => {
-    return this.state.recipeList.map(cur => (
-      <RecipeCard title={cur.title} image={cur.thumbnail} recipeLink={cur.href}>
-        {cur.ingredients.split(", ").map(elem => (
-          <Chip text={elem} />
-        ))}
-      </RecipeCard>
+    return this.state.recipeList.map((cur, index) => (
+      <RecipeCard
+        title={cur.title}
+        image={cur.thumbnail}
+        recipeLink={cur.href}
+        ingredients={cur.ingredients}
+        key={index}
+      />
     ));
   };
 
@@ -53,7 +54,11 @@ class App extends Component {
           searchTerms={this.state.searchTerms}
           onSearchSubmit={this.onSearchSubmit}
         />
-        <div id="container" className="flex-parent">
+        <div
+          id="container"
+          className="flex-parent"
+          style={{ alignItems: "flex-start" }}
+        >
           {this.renderRecipes()}
         </div>
       </div>
