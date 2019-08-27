@@ -4,6 +4,7 @@ import { BASE_URL, CORS_PROXY } from "../config";
 import Header from "./Header";
 import RecipeCard from "./RecipeCard";
 import "../assets/css/App.css";
+import { toTitleCase, checkSubArray } from "../utils";
 
 class App extends Component {
   constructor(props) {
@@ -15,14 +16,12 @@ class App extends Component {
   }
 
   onSearchAdd = term => {
-    term = term[0].toUpperCase() + term.substring(1, term.length).toLowerCase();
+    term = toTitleCase(term);
     this.setState({ searchTerms: [...this.state.searchTerms, term] });
   };
 
-  onSearchDelete = key => {
-    const searchTerms = this.state.searchTerms.filter(
-      (cur, index) => key !== index
-    );
+  onSearchDelete = term => {
+    const searchTerms = this.state.searchTerms.filter(cur => cur !== term);
     this.setState({ searchTerms });
   };
 
@@ -34,15 +33,24 @@ class App extends Component {
   };
 
   renderRecipes = () => {
-    return this.state.recipeList.map((cur, index) => (
-      <RecipeCard
-        title={cur.title}
-        image={cur.thumbnail}
-        recipeLink={cur.href}
-        ingredients={cur.ingredients}
-        key={index}
-      />
-    ));
+    return this.state.recipeList.map((cur, index) => {
+      let ingredientsList = cur.ingredients.split(", ");
+      ingredientsList = ingredientsList.map(cur => toTitleCase(cur));
+      if (checkSubArray(this.state.searchTerms, ingredientsList))
+        return (
+          <RecipeCard
+            title={cur.title}
+            image={cur.thumbnail}
+            recipeLink={cur.href}
+            ingredients={ingredientsList}
+            selectedIngredients={this.state.searchTerms}
+            onSearchAdd={this.onSearchAdd}
+            onSearchDelete={this.onSearchDelete}
+            key={index}
+          />
+        );
+      else return null;
+    });
   };
 
   render() {

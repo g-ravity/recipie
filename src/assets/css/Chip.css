@@ -1,5 +1,4 @@
 #chip {
-  background: #b5b5b5;
   padding: 10px 5px 10px 10px;
   border-radius: 20px;
   cursor: default;
@@ -22,9 +21,11 @@
 }
 
 .not-selected {
+  background: #b5b5b5;
   opacity: 0.7;
 }
 
 .selected {
+  background: #999999;
   opacity: 1;
 }

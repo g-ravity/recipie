@@ -3,13 +3,14 @@ import React, { Component } from "react";
 import arrow from "../assets/img/arrow.png";
 import "../assets/css/RecipeCard.css";
 import Chip from "./Chip";
+import { checkIfExists } from "../utils";
 
 class RecipeCard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      fullIngredientsList: this.props.ingredients.split(", "),
-      halfIngredientsList: this.props.ingredients.split(", ").splice(0, 5),
+      fullIngredientsList: this.props.ingredients,
+      halfIngredientsList: this.props.ingredients.slice(0, 5),
       showfullIngredients: false
     };
   }
@@ -24,7 +25,26 @@ class RecipeCard extends Component {
     const ingredientsList = this.state.showfullIngredients
       ? this.state.fullIngredientsList
       : this.state.halfIngredientsList;
-    return ingredientsList.map((cur, index) => <Chip text={cur} key={index} />);
+    return ingredientsList.map((cur, index) => {
+      return checkIfExists(cur, this.props.selectedIngredients) ? (
+        <Chip
+          text={cur}
+          key={index}
+          keyid={`${index}-${cur}`}
+          onAdd={this.props.onSearchAdd}
+          onDelete={this.props.onSearchDelete}
+        />
+      ) : (
+        <Chip
+          text={cur}
+          key={index}
+          keyid={`${index}-${cur}`}
+          onAdd={this.props.onSearchAdd}
+          onDelete={this.props.onSearchDelete}
+          isSelected={false}
+        />
+      );
+    });
   };
 
   render() {

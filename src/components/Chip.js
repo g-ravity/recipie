@@ -1,38 +1,35 @@
-import React, { Component } from "react";
+import React from "react";
 
 import "../assets/css/Chip.css";
 import cross from "../assets/img/cross.png";
 import add from "../assets/img/add.png";
 
-class Chip extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isSelected: true
-    };
-  }
+const Chip = ({ text, keyid, isSelected, onAdd, onDelete }) => {
+  return (
+    <div
+      id="chip"
+      className={`flex-parent ${isSelected ? "selected" : "not-selected"}`}
+    >
+      <p>{text}</p>
+      <img
+        src={isSelected ? cross : add}
+        alt="icon"
+        width="20"
+        onClick={() => {
+          isSelected
+            ? onDelete(keyid.split("-")[1])
+            : onAdd(keyid.split("-")[1]);
+        }}
+        className={isSelected ? "selected" : "not-selected"}
+      />
+    </div>
+  );
+};
 
-  render() {
-    return (
-      <div
-        id="chip"
-        className={`flex-parent ${
-          this.state.isSelected ? "selected" : "not-selected"
-        }`}
-      >
-        <p>{this.props.text}</p>
-        <img
-          src={this.state.isSelected ? cross : add}
-          alt="icon"
-          width="20"
-          onClick={() => {
-            this.props.onClick(this.props.keyid);
-          }}
-          className={this.state.isSelected ? "selected" : "not-selected"}
-        />
-      </div>
-    );
-  }
-}
+Chip.defaultProps = {
+  isSelected: true,
+  onAdd: null,
+  onDelete: null
+};
 
 export default Chip;
