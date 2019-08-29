@@ -30,7 +30,6 @@ class RecipeCard extends Component {
         <Chip
           text={cur}
           key={index}
-          keyid={`${index}-${cur}`}
           onAdd={this.props.onSearchAdd}
           onDelete={this.props.onSearchDelete}
         />
@@ -38,7 +37,6 @@ class RecipeCard extends Component {
         <Chip
           text={cur}
           key={index}
-          keyid={`${index}-${cur}`}
           onAdd={this.props.onSearchAdd}
           onDelete={this.props.onSearchDelete}
           isSelected={false}

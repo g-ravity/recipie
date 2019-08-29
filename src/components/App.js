@@ -7,7 +7,9 @@ import Header from "./Header";
 import RecipeCard from "./RecipeCard";
 import Loader from "./Loader";
 import "../assets/css/App.css";
-import { toTitleCase, checkSubArray } from "../utils";
+import { toTitleCase, checkSubArray, checkScrollBottom } from "../utils";
+
+let isScrolling;
 
 class App extends Component {
   constructor(props) {
@@ -16,11 +18,26 @@ class App extends Component {
       searchTerms: [],
       recipeList: [],
       isWaiting: false,
-      isLanding: true
+      isLanding: true,
+      page: 1,
+      smoothScroll: false
     };
   }
 
+  componentDidMount() {
+    document.addEventListener("scroll", () => {
+      window.clearTimeout(isScrolling);
+      isScrolling = setTimeout(() => {
+        if (checkScrollBottom()) {
+          if (!this.state.isWaiting && !this.state.smoothScroll)
+            this.onSearchSubmit(this.state.page + 1);
+        }
+      }, 200);
+    });
+  }
+
   scrollToBottom() {
+    this.setState({ smoothScroll: true });
     scroll.scrollToBottom();
   }
 
@@ -34,18 +51,26 @@ class App extends Component {
     this.setState({ searchTerms });
   };
 
-  onSearchSubmit = () => {
+  setPage = pageNum => {
+    this.setState({ page: pageNum });
+  };
+
+  onSearchSubmit = page => {
     if (this.state.isLanding) {
       this.setState({ isWaiting: true, isLanding: false });
     } else this.setState({ isWaiting: true });
     this.scrollToBottom();
     Events.scrollEvent.register("end", async () => {
-      const URL = CORS_PROXY + BASE_URL + this.state.searchTerms.join(",");
+      const URL = `${CORS_PROXY}${BASE_URL}${this.state.searchTerms.join(
+        ","
+      )}&p=${page}`;
       const results = await fetch(URL);
       const data = await results.json();
       this.setState({
         recipeList: [...this.state.recipeList, ...data.results],
-        isWaiting: false
+        isWaiting: false,
+        page,
+        smoothScroll: false
       });
     });
   };

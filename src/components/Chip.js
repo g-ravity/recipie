@@ -4,7 +4,7 @@ import "../assets/css/Chip.css";
 import cross from "../assets/img/cross.png";
 import add from "../assets/img/add.png";
 
-const Chip = ({ text, keyid, isSelected, onAdd, onDelete }) => {
+const Chip = ({ text, isSelected, onAdd, onDelete }) => {
   return (
     <div
       id="chip"
@@ -16,9 +16,7 @@ const Chip = ({ text, keyid, isSelected, onAdd, onDelete }) => {
         alt="icon"
         width="20"
         onClick={() => {
-          isSelected
-            ? onDelete(keyid.split("-")[1])
-            : onAdd(keyid.split("-")[1]);
+          isSelected ? onDelete(text) : onAdd(text);
         }}
         className={isSelected ? "selected" : "not-selected"}
       />

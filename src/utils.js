@@ -18,3 +18,12 @@ export const checkSubArray = (subArr, arr) => {
   const bool = subArr.map(cur => checkIfExists(cur, arr));
   return !bool.includes(false);
 };
+
+export const checkScrollBottom = () => {
+  if (
+    window.scrollY + window.innerHeight ===
+    document.getElementsByTagName("html")[0].scrollHeight
+  )
+    return true;
+  return false;
+};

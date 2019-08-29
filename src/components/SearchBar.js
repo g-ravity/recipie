@@ -8,12 +8,7 @@ import Input from "./Input";
 class SearchBar extends Component {
   renderChips = () => {
     return this.props.searchTerms.map((cur, index) => (
-      <Chip
-        text={cur}
-        key={index}
-        keyid={`${index}-${cur}`}
-        onDelete={this.onChipDelete}
-      />
+      <Chip text={cur} key={index} onDelete={this.onChipDelete} />
     ));
   };
 
@@ -36,7 +31,13 @@ class SearchBar extends Component {
               <Input onInputSubmit={this.props.onSearchAdd} />
             )}
           </div>
-          <button onClick={this.props.onSearchSubmit}>SEARCH</button>
+          <button
+            onClick={() => {
+              this.props.onSearchSubmit(1);
+            }}
+          >
+            SEARCH
+          </button>
           <p id="terms-warning">{`${5 -
             this.props.searchTerms.length} terms remaining`}</p>
         </div>
