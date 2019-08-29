@@ -5,9 +5,7 @@
   border-radius: 30px;
   padding: 10px;
   position: absolute;
-  bottom: 0;
   box-sizing: border-box;
-  margin-bottom: -35px;
 }
 
 #chip-terms #chip {
@@ -32,4 +30,21 @@
   bottom: 0;
   right: 30px;
   margin-bottom: -20px;
+}
+
+.landing-position {
+  bottom: -20vh;
+  left: 50%;
+  margin-left: -300px;
+  margin-bottom: 0;
+}
+
+.slide-exit-active,
+.slide-exit-done {
+  bottom: 0;
+  left: 10%;
+  margin-left: 0;
+  margin-bottom: -35px;
+  transition: bottom 0.5s ease-in-out, left 0.5s ease-in-out,
+    margin 0.5s ease-in-out;
 }

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { animateScroll as scroll, Events } from "react-scroll";
+import CSSTransition from "react-transition-group/CSSTransition";
 
 import { BASE_URL, CORS_PROXY } from "../config";
 import Header from "./Header";
@@ -14,7 +15,8 @@ class App extends Component {
     this.state = {
       searchTerms: [],
       recipeList: [],
-      isWaiting: false
+      isWaiting: false,
+      isLanding: true
     };
   }
 
@@ -33,7 +35,9 @@ class App extends Component {
   };
 
   onSearchSubmit = () => {
-    this.setState({ isWaiting: true });
+    if (this.state.isLanding) {
+      this.setState({ isWaiting: true, isLanding: false });
+    } else this.setState({ isWaiting: true });
     this.scrollToBottom();
     Events.scrollEvent.register("end", async () => {
       const URL = CORS_PROXY + BASE_URL + this.state.searchTerms.join(",");
@@ -70,19 +74,31 @@ class App extends Component {
   render() {
     return (
       <div>
+        <CSSTransition
+          mountOnEnter
+          unmountOnExit
+          in={this.state.isLanding}
+          timeout={300}
+          classNames="fade"
+        >
+          <div className="filter"></div>
+        </CSSTransition>
         <Header
           onSearchAdd={this.onSearchAdd}
           onSearchDelete={this.onSearchDelete}
           searchTerms={this.state.searchTerms}
           onSearchSubmit={this.onSearchSubmit}
+          isLanding={this.state.isLanding}
         />
-        <div
-          id="container"
-          className="flex-parent"
-          style={{ alignItems: "flex-start" }}
-        >
-          {this.renderRecipes()}
-        </div>
+        {!this.state.isLanding && (
+          <div
+            id="container"
+            className="flex-parent"
+            style={{ alignItems: "flex-start" }}
+          >
+            {this.renderRecipes()}
+          </div>
+        )}
         {this.state.isWaiting && <Loader />}
       </div>
     );

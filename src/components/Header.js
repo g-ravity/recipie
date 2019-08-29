@@ -1,4 +1,5 @@
 import React from "react";
+import CSSTransition from "react-transition-group/CSSTransition";
 
 import "../assets/css/Header.css";
 import SearchBar from "./SearchBar";
@@ -18,11 +19,21 @@ const Header = props => {
         <img src={image2} alt="Scrambled Eggs" width="200" />
         <img src={image3} alt="Biriyani" width="200" />
       </div>
+      <CSSTransition
+        mountOnEnter
+        unmountOnExit
+        in={props.isLanding}
+        timeout={300}
+        classNames="fade-header"
+      >
+        <div className="filter"></div>
+      </CSSTransition>
       <SearchBar
         onSearchAdd={props.onSearchAdd}
         onSearchDelete={props.onSearchDelete}
         searchTerms={props.searchTerms}
         onSearchSubmit={props.onSearchSubmit}
+        isLanding={props.isLanding}
       />
     </div>
   );
